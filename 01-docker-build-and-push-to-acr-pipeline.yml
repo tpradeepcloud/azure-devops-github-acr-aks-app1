@@ -37,3 +37,26 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+name: $(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  trivyVersion: 0.9.1
+
+steps:
+- script: |
+    sudo apt-get install rpm
+    wget https://github.com/aquasecurity/trivy/releases/download/v$(trivyVersion)/trivy_$(trivyVersion)_Linux-64bit.deb
+    sudo dpkg -i trivy_$(trivyVersion)_Linux-64bit.deb
+    trivy -v
+  displayName: 'Download and install Trivy'
+  - task: CmdLine@2
+  displayName: "Run trivy scan"
+  inputs:
+    script: |
+      trivy image app1nginx:36
