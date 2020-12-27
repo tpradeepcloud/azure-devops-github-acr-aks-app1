@@ -28,7 +28,6 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-- task: WhiteSource Bolt@20
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
