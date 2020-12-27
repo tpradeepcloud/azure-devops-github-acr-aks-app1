@@ -1,0 +1,36 @@
+# Docker
+# Build a Docker image 
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        tags: |
+          $(tag)
+- task: QualysCSConnector@1
+  inputs:
+    QualysApiServer: 'https://qualysguard.qg1.apps.qualys.in'
+    QualysApiUsername: 'gftve8pt'
+    QualysApiPassword: 'iloveINDIA@2717'
+    imageID: 'app1nginx:31'
+    dockerUrl: 'unix:///var/run/docker.sock'
