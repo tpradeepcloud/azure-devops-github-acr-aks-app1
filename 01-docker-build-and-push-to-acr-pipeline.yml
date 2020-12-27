@@ -1,11 +1,4 @@
 # Docker
-- task: QualysCSConnector@1
-  inputs:
-    QualysApiServer: 'https://qualysguard.qg1.apps.qualys.in'
-    QualysApiUsername: 'gftve8pt'
-    QualysApiPassword: 'iloveINDIA@2717'
-    imageID: 'app1nginx/31'
-    dockerUrl: 'unix:///var/run/docker.sock'
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
